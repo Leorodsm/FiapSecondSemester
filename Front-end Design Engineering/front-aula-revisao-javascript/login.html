@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Página de login segura para acesso à sua conta. Faça login com email e senha.">
+    <meta name="keywords" content="login, acesso, conta, email, senha, entrar">
+    <meta name="author" content="Sistema de Login">
+    <title>Login - Acesse sua conta</title>
+    
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="./js/script.js" defer></script>
+
+    <!-- Font Awesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">        
+</head>
+
+<body>
+    <!-- Header semântico -->
+    <header class="header" role="banner">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1>
+                        <i class="fas fa-shield-alt" aria-hidden="true"></i>
+                        Sistema Seguro
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Conteúdo principal -->
+    <main class="main-content" role="main">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="login-container">
+                        <div class="login-header">
+                            <h2>Faça seu Login</h2>
+                            <p>Acesse sua conta de forma segura</p>
+                        </div>
+
+                        <!-- Formulário de login -->
+                        <form id="loginForm" novalidate aria-labelledby="login-heading">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="email" class="form-label">
+                                            Email
+                                            <span class="sr-only">(obrigatório)</span>
+                                        </label>
+                                        <div class="input-group">
+                                            <input 
+                                                type="email" 
+                                                id="email" 
+                                                name="email" 
+                                                class="form-control" 
+                                                placeholder="Seu email"
+                                                required
+                                                aria-required="true"
+                                                aria-describedby="email-help"
+                                                autocomplete="email"
+                                            >
+                                            <i class="fas fa-envelope input-icon" aria-hidden="true"></i>
+                                        </div>
+                                        <div id="email-help" class="sr-only">
+                                            Digite seu endereço de email válido
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="password" class="form-label">
+                                            Senha
+                                            <span class="sr-only">(obrigatório)</span>
+                                        </label>
+                                        <div class="input-group">
+                                            <input 
+                                                type="password" 
+                                                id="password" 
+                                                name="password" 
+                                                class="form-control" 
+                                                placeholder="Sua senha"
+                                                required
+                                                aria-required="true"
+                                                aria-describedby="password-help"
+                                                autocomplete="current-password"
+                                                minlength="6"
+                                            >
+                                            <i class="fas fa-lock input-icon" aria-hidden="true"></i>
+                                        </div>
+                                        <div id="password-help" class="sr-only">
+                                            Digite sua senha com no mínimo 6 caracteres
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-check">
+                                        <input 
+                                            type="checkbox" 
+                                            id="remember" 
+                                            name="remember" 
+                                            class="form-check-input"
+                                        >
+                                        <label for="remember" class="form-check-label">
+                                            Lembrar de mim
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-sign-in-alt" aria-hidden="true"></i>
+                                        Entrar
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="forgot-password">
+                                        <a href="#" role="button">Esqueceu sua senha?</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <p>&copy; 2024 Sistema Seguro. Todos os direitos reservados.</p>
+                    <p>
+                        <a href="#privacy">Política de Privacidade</a> | 
+                        <a href="#terms">Termos de Uso</a> | 
+                        <a href="#help">Ajuda</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript para melhorar a acessibilidade e UX
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('loginForm');
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const submitBtn = form.querySelector('.btn-primary');
+
+            // Validação em tempo real
+            function validateEmail(email) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return emailRegex.test(email);
+            }
+
+            function updateInputStatus(input, isValid) {
+                if (isValid) {
+                    input.setAttribute('aria-invalid', 'false');
+                } else {
+                    input.setAttribute('aria-invalid', 'true');
+                }
+            }
+
+            emailInput.addEventListener('blur', function() {
+                const isValid = validateEmail(this.value);
+                updateInputStatus(this, isValid);
+            });
+
+            passwordInput.addEventListener('blur', function() {
+                const isValid = this.value.length >= 6;
+                updateInputStatus(this, isValid);
+            });
+
+            // Submissão do formulário
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const email = emailInput.value;
+                const password = passwordInput.value;
+                
+                // Validações
+                if (!validateEmail(email)) {
+                    emailInput.focus();
+                    alert('Por favor, insira um email válido.');
+                    return;
+                }
+                
+                if (password.length < 6) {
+                    passwordInput.focus();
+                    alert('A senha deve ter pelo menos 6 caracteres.');
+                    return;
+                }
+
+                // Simular loading
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Entrando...';
+                
+                // Simular processo de login
+                setTimeout(() => {
+                    alert('Login realizado com sucesso! (Esta é apenas uma demonstração)');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="fas fa-sign-in-alt" aria-hidden="true"></i> Entrar';
+                }, 2000);
+            });
+
+            // Melhorar acessibilidade com teclas
+            document.addEventListener('keydown', function(e) {
+                // ESC para limpar formulário
+                if (e.key === 'Escape') {
+                    form.reset();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
